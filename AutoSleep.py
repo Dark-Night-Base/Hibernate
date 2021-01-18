@@ -14,6 +14,7 @@ playerCount = 0
 # def on_info(server: ServerInterface, info: Info):
 
 
+@new_thread
 def stop_server_later(server: ServerInterface, waitmin: int):
     global playerCount
     time.sleep(waitmin * 60)
@@ -40,4 +41,5 @@ def on_player_left(server: ServerInterface, player: str):
     if playerCount > 0:
         playerCount -= 1
         if playerCount == 0:
-            stop_server_later(server, 10)
+            server.say("waiting to sleep")
+            stop_server_later(server, 1)
