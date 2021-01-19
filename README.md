@@ -27,6 +27,8 @@ The **FakeServer** will also respond the player's **ping request**, and change
 > The **ping request** we meant here is the request sent by client when the 
 > button *Refresh* is clicked.
 
+![](assets/multi.jpg)
+
 ## Features
 
 - [x] Basic Features
