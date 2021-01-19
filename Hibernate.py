@@ -76,7 +76,7 @@ def pic2base() -> bytes:
 
 
 def genStatus() -> bytes:
-    msg = '{"description":{"text":"server is sleeping, connect to wake it!"},\
+    msg = '{"description":{"text":"server is sleeping, connect to wake it up"},\
     "players":{"max":%d,"online":0},\
     "version":{"name":"%s","protocol":%d},\
     "favicon":"data:image/png;base64,' % (server_property["MaxPlayers"], server_property["Version"], server_property["Protocol"])
