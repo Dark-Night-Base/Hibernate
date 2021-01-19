@@ -15,6 +15,7 @@ PLUGIN_METADATA = {
     'link': 'https://github.com/Dark-Night-Base/AutoSleep',
 }
 
+waitmin = 10  # wait 10min before shutting server down
 
 server_property = {"Version": "", "Protocol": 0, "MaxPlayers": 0}
 
@@ -32,10 +33,11 @@ def stop_server_later(server: ServerInterface, waitmin: int):
 
 @new_thread
 def query_playernum(server: ServerInterface):
+    global waitmin
     time.sleep(1)  # in case of server is not ready yet
     playerCount = Client().getResultNew()["OnlinePlayers"]
     if playerCount == 0:
-        stop_server_later(server, 0.1)  # TODO: read waitmin from config
+        stop_server_later(server, waitmin)  # TODO: read waitmin from config
 
 
 def on_load(server: ServerInterface, old_module):
