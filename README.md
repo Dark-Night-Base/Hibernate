@@ -32,3 +32,5 @@ The **FakeServer** will also respond the player's **ping request**, and change
 - [x] Basic Features
 - [x] Read Config
 - [ ] In game setting
+- [ ] Long connection
+- [ ] Ping

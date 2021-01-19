@@ -38,7 +38,7 @@ def query_playernum(server: ServerInterface):
     time.sleep(1)  # in case of server is not ready yet
     playerCount = Client().getResultNew()["OnlinePlayers"]
     if playerCount == 0:
-        stop_server_later(server, waitmin)  # TODO: read waitmin from config
+        stop_server_later(server, waitmin)
 
 
 def on_load(server: ServerInterface, old_module):
@@ -68,7 +68,7 @@ def on_player_left(server: ServerInterface, player: str):
 
 def pic2base() -> bytes:
     '''encode the server-icon.png to base64'''
-    image_path = "server/server-icon.png"  # TODO: read server.properties
+    image_path = "server/server-icon.png"
     with open(image_path, "rb") as f:
         image = f.read()
         image_base64 = base64.b64encode(image)
