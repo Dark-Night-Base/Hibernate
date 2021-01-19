@@ -1,9 +1,10 @@
 import base64
-from json import loads
 import socket
 import time
+from json import loads
 from re import findall, sub
 
+import yaml
 from mcdreforged.api.all import *
 
 PLUGIN_METADATA = {
@@ -41,9 +42,18 @@ def query_playernum(server: ServerInterface):
 
 
 def on_load(server: ServerInterface, old_module):
-    # server.register_command(Literal('!!autosleep').then(Literal('help').runs()))
+    global waitmin
+    try:
+        with open("config/Hibernate.yml") as file:
+            confYaml = yaml.load(file, Loader=yaml.CLoader)
+            waitmin = confYaml["waitmin"]
+    except:
+        server.logger.info('fail to read config file, using default value')
+        with open("config/Hibernate.yml", 'w') as file:
+            config = {"waitmin": waitmin}
+            yaml.dump(config, file)
     server.register_help_message(
-        "!!autosleep", "Sleep server at 10min after no one's online")
+        "!!hibernate", "Hibernate server at %dmin after no one's online" % waitmin)
     if server.is_server_startup():
         query_playernum(server)
 

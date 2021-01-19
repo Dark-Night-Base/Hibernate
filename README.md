@@ -26,3 +26,9 @@ The **FakeServer** will also respond the player's **ping request**, and change
  the *MOTD*, the *favicon* as shown below.
 > The **ping request** we meant here is the request sent by client when the 
 > button *Refresh* is clicked.
+
+## Features
+
+- [x] Basic Features
+- [x] Read Config
+- [ ] In game setting
