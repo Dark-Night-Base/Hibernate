@@ -36,3 +36,8 @@ The **FakeServer** will also respond the player's **ping request**, and change
 - [ ] In game setting
 - [ ] Long connection
 - [ ] Ping
+
+## Reference
+
+- [MinecraftServerQueryPythonTCP](https://github.com/Saren-Arterius/MinecraftServerQueryPythonTCP)
+- [FakeMCServer](https://github.com/ZockerSK/FakeMCServer)
