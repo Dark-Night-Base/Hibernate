@@ -29,6 +29,8 @@ def stop_server_later(server: ServerInterface, waitmin: int):
     if (Client().getResultNew())["OnlinePlayers"] == 0:
         server.logger.info("Hibernate!")
         server.stop()
+        while server.is_server_running():
+            pass
         FakeServer(server)
 
 
@@ -112,7 +114,7 @@ def FakeServer(server: ServerInterface):
         L2: length of USER
         e.g. \x16\x00\xc2\x04\x12tis.union.worldc\xdd\x02\r\x00\x0bSciroccogti
     '''
-    print("FakeServer!")
+    server.logger.info("FakeServer start!")
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # TODO: read port from server.properties
     while True:  # waiting for port exiting TIME_WAIT
@@ -122,37 +124,37 @@ def FakeServer(server: ServerInterface):
                 socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
             server_socket.bind((socket.gethostname(), 25565))
         except Exception as err:
-            print("port is been using", err)
+            server.logger.warn("port is been using", err)
             server_socket.close()
             time.sleep(1)
         else:
-            print("Connected!")
+            server.logger.info("FakeServer is ready")
             break
 
     server_socket.listen(128)
     try:
         while True:
             client_socket, client_addr = server_socket.accept()  # wait for client
-            recv_data = client_socket.recv(1024)  # UTF-16
+            recv_data = client_socket.recv(50)
             # print(recv_data)
             # print(recv_data.decode("unicode-escape"))
 
             dataLength = decode_varint(recv_data[:2].decode("latin-1")) + 2
-
             # Judge if is "MC|PingHost+`ip`" or ping request 1
             if ((recv_data[0:2] == b"\xfe\x01"  # frame head
                     and recv_data[5:27].decode("utf-16-be") == "MC|PingHost")
                     or len(recv_data) < dataLength + 2):
-                server.logger.debug("FakeServer get a ping")
+                server.logger.info("FakeServer get a ping")
                 client_socket.send(genStatus())
                 client_socket.close()
             else:  # login request
                 # start server here
-                server.logger.debug("FakeServer get a login request")
+                server.logger.info("FakeServer get a login request")
                 server.start()
-                # client_socket.send(genLoginReturn())
                 client_socket.close()
                 server_socket.close()
+                break
+                # client_socket.send(genLoginReturn())
 
     except:
         server_socket.close()
